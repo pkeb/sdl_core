@@ -2,7 +2,7 @@ include(CheckIncludeFile)
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 include(CheckSymbolExists)
-include(TestBigEndian)
+#include(TestBigEndian)
 
 check_include_file("dlfcn.h" HAVE_DLFCN_H)
 check_include_file("fcntl.h" HAVE_FCNTL_H)
@@ -24,13 +24,16 @@ check_function_exists("mmap" HAVE_MMAP)
 #/* Define to 1 if you have the ANSI C header files. */
 check_include_files("stdlib.h;stdarg.h;string.h;float.h" STDC_HEADERS)
 
-test_big_endian(WORDS_BIGENDIAN)
+#test_big_endian(WORDS_BIGENDIAN)
 #/* 1234 = LIL_ENDIAN, 4321 = BIGENDIAN */
-if(WORDS_BIGENDIAN)
-    set(BYTEORDER 4321)
-else(WORDS_BIGENDIAN)
-    set(BYTEORDER 1234)
-endif(WORDS_BIGENDIAN)
+#if(WORDS_BIGENDIAN)
+    #set(BYTEORDER 4321)
+#else(WORDS_BIGENDIAN)
+    #set(BYTEORDER 1234)
+#endif(WORDS_BIGENDIAN)
+
+# we assume little endian to get past error
+set(BYTEORDER 1234)
 
 if(HAVE_SYS_TYPES_H)
     check_symbol_exists("off_t" "sys/types.h" OFF_T)

@@ -32,6 +32,12 @@ cmake_minimum_required(VERSION 2.8.0)
 
 set (PROJECT smartDeviceLinkCore)
 
+message( "CMAKE_C_FLAGS:${CMAKE_CXX_FLAGS}")
+message( "CMAKE_CXX_FLAGS:${CMAKE_CXX_FLAGS}")
+message( "CMAKE_MODULE_LINKER_FLAGS:${CMAKE_MODULE_LINKER_FLAGS}" )
+message( "CMAKE_SHARED_LINKER_FLAGS:${CMAKE_SHARED_LINKER_FLAGS}" )
+message( "CMAKE_STATIC_LINKER_FLAGS:${CMAKE_STATIC_LINKER_FLAGS}" )
+
 #Jenkins integration section
 #dont modify this section if you dont know details about integration with Jenkins!!!
 set (HMI "web" CACHE STRING "HMI type")
@@ -43,7 +49,7 @@ option(BUILD_USB_SUPPORT "libusb support" ON)
 option(BUILD_BACKTRACE_SUPPORT "backtrace support" ON)
 option(BUILD_TESTS "Possibility to build and run tests" OFF)
 option(TELEMETRY_MONITOR "Enable profiling time test util" ON)
-option(ENABLE_LOG "Logging feature" ON)
+#option(ENABLE_LOG "Logging feature" ON)
 option(ENABLE_GCOV "gcov code coverage feature" OFF)
 option(ENABLE_SANITIZE "Sanitize tool" OFF)
 option(ENABLE_SECURITY "Security Ford protocol protection" ON)
@@ -184,7 +190,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR})
 set(ARCHIVE_OUTPUT_DIRECTORY ./bin)
 
-set(CMAKE_CXX_FLAGS "-fPIC -std=gnu++0x -Wall -Werror -Wno-deprecated-declarations -Wuninitialized -Wvla")
+set(CMAKE_C_FLAGS " --sysroot=/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi -march=armv7ve -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -fPIC")
+set(CMAKE_CXX_FLAGS " --sysroot=/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi -march=armv7ve -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7")
+
+#set(CMAKE_CXX_FLAGS " -fPIC -std=gnu++0x -Wall -Werror -Wno-deprecated-declarations -Wuninitialized -Wvla")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=gnu++0x -Wall -Wno-deprecated-declarations -Wuninitialized -Wvla")
 
 if(ENABLE_SANITIZE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
@@ -622,6 +632,7 @@ add_custom_target(install-3rd_party
 find_package(OpenSSL REQUIRED)
 if(ENABLE_LOG)
   include_directories ( ${LOG4CXX_INCLUDE_DIRECTORY} )
+  message("LOG4CXX_INCLUDE_DIRECTORY:${LOG4CXX_INCLUDE_DIRECTORY}")
 endif()
 
 if(ENABLE_SECURITY)
@@ -698,3 +709,8 @@ FIND_PACKAGE(Doxygen)
     MESSAGE(STATUS "sudo apt-get install mscgen")
 ENDIF(DOXYGEN_FOUND)
 
+message( "CMAKE_C_FLAGS:${CMAKE_CXX_FLAGS}")
+message( "CMAKE_CXX_FLAGS:${CMAKE_CXX_FLAGS}")
+message( "CMAKE_MODULE_LINKER_FLAGS:${CMAKE_MODULE_LINKER_FLAGS}" )
+message( "CMAKE_SHARED_LINKER_FLAGS:${CMAKE_SHARED_LINKER_FLAGS}" )
+message( "CMAKE_STATIC_LINKER_FLAGS:${CMAKE_STATIC_LINKER_FLAGS}" )

@@ -35,7 +35,7 @@
 
 #include <string>
 #include <queue>
-#include <log4cxx/logger.h>
+//#include <log4cxx/logger.h>
 
 #include "utils/macro.h"
 #include "utils/threads/message_loop_thread.h"
@@ -43,12 +43,12 @@
 namespace logger {
 
 typedef struct {
-  log4cxx::LoggerPtr logger;
-  log4cxx::LevelPtr level;
+  //log4cxx::LoggerPtr logger;
+  //log4cxx::LevelPtr level;
   std::string entry;
-  log4cxx_time_t timeStamp;
-  log4cxx::spi::LocationInfo location;
-  log4cxx::LogString threadName;
+  //log4cxx_time_t timeStamp;
+  //log4cxx::spi::LocationInfo location;
+  //log4cxx::LogString threadName;
 } LogMessage;
 
 typedef std::queue<LogMessage> LogMessageQueue;

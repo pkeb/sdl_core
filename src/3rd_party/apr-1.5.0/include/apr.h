@@ -276,9 +276,9 @@ extern "C" {
 #define APR_HAS_UNICODE_FS        0
 #define APR_HAS_PROC_INVOKED      0
 #define APR_HAS_USER              1
-#define APR_HAS_LARGE_FILES       0
+#define APR_HAS_LARGE_FILES       1
 #define APR_HAS_XTHREAD_FILES     0
-#define APR_HAS_OS_UUID           0
+#define APR_HAS_OS_UUID           1
 
 #define APR_PROCATTR_USER_SET_REQUIRES_PASSWORD 0
 
@@ -314,7 +314,7 @@ typedef  unsigned short  apr_uint16_t;
 typedef  int             apr_int32_t;
 typedef  unsigned int    apr_uint32_t;
 
-#define APR_SIZEOF_VOIDP 8
+#define APR_SIZEOF_VOIDP 4
 
 /*
  * Darwin 10's default compiler (gcc42) builds for both 64 and
@@ -355,7 +355,7 @@ typedef  unsigned int    apr_uint32_t;
 
 typedef  size_t          apr_size_t;
 typedef  ssize_t         apr_ssize_t;
-typedef  off_t           apr_off_t;
+typedef  off64_t           apr_off_t;
 typedef  socklen_t       apr_socklen_t;
 typedef  ino_t           apr_ino_t;
 
@@ -530,13 +530,13 @@ typedef  apr_uint32_t            apr_uintptr_t;
  * configure.in.
  */
 
-#define APR_SSIZE_T_FMT "ld"
+#define APR_SSIZE_T_FMT "d"
 
 /* And APR_SIZE_T_FMT */
-#define APR_SIZE_T_FMT "lu"
+#define APR_SIZE_T_FMT "u"
 
 /* And APR_OFF_T_FMT */
-#define APR_OFF_T_FMT "ld"
+#define APR_OFF_T_FMT APR_INT64_T_FMT
 
 /* And APR_PID_T_FMT */
 #define APR_PID_T_FMT "d"

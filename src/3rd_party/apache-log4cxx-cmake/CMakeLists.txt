@@ -43,7 +43,6 @@ file(MAKE_DIRECTORY
 set(COMMON_CONFIGURE_FLAGS
   "--with-apr=../apr-build"
   "--with-apr-util=../apr-util-build"
-  "LDFLAGS=-L${EXPAT_LIBS_DIRECTORY}"
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "QNX")
@@ -54,7 +53,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL "QNX")
   endif ()
   set(CONFIGURE_FLAGS "--host=${ARCHITECTURE}-nto-qnx" ${COMMON_CONFIGURE_FLAGS})
 else()
-  set(CONFIGURE_FLAGS ${COMMON_CONFIGURE_FLAGS})
+  set(CONFIGURE_FLAGS 
+     ${COMMON_CONFIGURE_FLAGS}
+    "--host=${CMAKE_SYSTEM_PROCESSOR}-linux"
+    "CFLAGS= --sysroot=/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi -march=armv7ve -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7"
+     "LDFLAGS=-L${EXPAT_LIBS_DIRECTORY} -L${CMAKE_SYSROOT}/usr/lib/ -L${CMAKE_SYSROOT}/lib/ -I${CMAKE_SYSROOT}/usr/include"
+     )
 endif()
 
 add_custom_command(OUTPUT ${LOG4CXX_BUILD_DIRECTORY}/Makefile

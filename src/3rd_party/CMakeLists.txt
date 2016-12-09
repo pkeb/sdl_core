@@ -33,6 +33,7 @@ INCLUDE("./set_3rd_party_paths.cmake")
 if(ENABLE_LOG OR HMI_DBUS_API)
   # --- libexpat
   add_subdirectory(expat-2.1.0)
+  set(EXPAT_INCLUDE_DIRECTORY ${3RD_PARTY_INSTALL_PREFIX_ARCH}/usr/include PARENT_SCOPE)
   set(EXPAT_LIBS_DIRECTORY ${3RD_PARTY_INSTALL_PREFIX_ARCH}/lib PARENT_SCOPE)
 endif()
 

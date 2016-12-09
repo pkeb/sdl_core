@@ -9,11 +9,21 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 #
 
+# the find functions aren't working for some reasion so setting manually
+set(UDEV_INCLUDE_DIR ${CMAKE_SYSROOT}/usr/include)
+set(UDEV_LIBRARIES ${CMAKE_SYSROOT}/usr/lib/libudev.so)
+#message(TESTSFSDFSDFJLKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)
+#message("UDEV_INCLUDE_DIR:" ${UDEV_INCLUDE_DIR})
+#message("UDEV_LIBRARIES:"${UDEV_LIBRARIES})
+#message("UDEV_PATH_INCLUDES:"${UDEV_PATH_INCLUDES})
+#message("UDEV_PATH_LIB:"${UDEV_PATH_LIB})
+#message("LIB_SUFFIX:"${LIB_SUFFIX})
+#message("$CMAKE_SYSROOT/usr/lib$LIB_SUFFIX:"${CMAKE_SYSROOT}/usr/lib${LIB_SUFFIX})
 FIND_PATH(
     UDEV_INCLUDE_DIR
     libudev.h
-    /usr/include
-    /usr/local/include
+    ${CMAKE_SYSROOT}/usr/include
+    ${CMAKE_SYSROOT}/usr/local/include
     ${UDEV_PATH_INCLUDES}
 )
 
@@ -21,8 +31,8 @@ FIND_LIBRARY(
     UDEV_LIBRARIES
     NAMES udev libudev
     PATHS
-        /usr/lib${LIB_SUFFIX}
-        /usr/local/lib${LIB_SUFFIX}
+        ${CMAKE_SYSROOT}/usr/lib${LIB_SUFFIX}
+        ${CMAKE_SYSROOT}/usr/local/lib${LIB_SUFFIX}
         ${UDEV_PATH_LIB}
 )
 

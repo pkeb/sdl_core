@@ -44,7 +44,21 @@ file(COPY ${APR_SOURCE_DIRECTORY}/tools/gen_test_char.c
   DESTINATION ${APR_BUILD_DIRECTORY}/tools
 )
 
-if(CMAKE_SYSTEM_NAME STREQUAL "QNX")
+if(CROSS_TARGET STREQUAL "AGL")
+  set(CONFIGURE_FLAGS
+    "--host=${CMAKE_SYSTEM_PROCESSOR}-linux"
+    "CFLAGS= --sysroot=/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi -march=armv7ve -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7"
+    "ac_cv_file__dev_zero=yes"
+    "ac_cv_func_setpgrp_void=yes"
+    "apr_cv_process_shared_works=yes"
+    "apr_cv_mutex_recursive=yes"
+    "apr_cv_mutex_robust_shared=no"
+    "apr_cv_tcp_nodelay_with_cork=no"
+    "ac_cv_sizeof_struct_iovec=8"
+    "LDFLAGS= -L${CMAKE_SYSROOT}/usr/lib/ -L${CMAKE_SYSROOT}/lib/ -I${CMAKE_SYSROOT}/usr/include"
+  )
+    #"LDFLAGS=-lpthread -L${CMAKE_SYSROOT}/usr/lib/ -L${CMAKE_SYSROOT}/lib/ -I${CMAKE_SYSROOT}/usr/include"
+elseif(CMAKE_SYSTEM_NAME STREQUAL "QNX")
   set(CONFIGURE_FLAGS
     "--host=${CMAKE_SYSTEM_PROCESSOR}-nto-qnx"
     "ac_cv_file__dev_zero=yes"
