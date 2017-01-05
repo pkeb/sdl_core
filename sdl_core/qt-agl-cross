@@ -1,0 +1,16 @@
+#!/bin/bash 
+
+#CORTEXA_ROOT="/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi"
+
+. /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi 
+CMAKE_SYSROOT="/opt/poky-agl/3.0.0+snapshot/sysroots/cortexa7hf-neon-vfpv4-agl-linux-gnueabi"
+#PATH=$CORTEXA_ROOT"/usr/lib:"$PATH
+#PATH=$CORTEXA_ROOT"/lib:"$PATH
+#export PATH
+#LIBRARY_PATH=$CORTEXA_ROOT"/usr/lib":$LIBRARY_PATH
+#LIBRARY_PATH=$CORTEXA_ROOT"/lib":$LIBRARY_PATH
+#export LIBRARY_PATH
+#LD_LIBRARY_PATH=$CORTEXA_ROOT"/usr/lib":$LD_LIBRARY_PATH
+#LD_LIBRARY_PATH=$CORTEXA_ROOT"/lib":$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH
+

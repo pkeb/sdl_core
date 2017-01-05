@@ -31,6 +31,7 @@
 cmake_minimum_required(VERSION 2.8.0)
 
 set (PROJECT smartDeviceLinkCore)
+set (FORCE_3RD_PARTY on)
 
 message( "CMAKE_C_FLAGS:${CMAKE_CXX_FLAGS}")
 message( "CMAKE_CXX_FLAGS:${CMAKE_CXX_FLAGS}")
