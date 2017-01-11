@@ -288,11 +288,11 @@ Note: Anything that begins with the character '$' indicates that the following i
             4. `$ connect [phone mac address]`
    2. Running Smart Device Link
       1. After copying the sdl_core/build/bin folder rename it to /home/rw/sdl_core
-      2. make a start script with `$ vi /home/rw/bin/run_sdl.sh`:
+      2. make a start script with `$ vi /home/rw/sdl_core/run_sdl.sh`:
       ```
       #!/bin/sh 
 
-      export LD_LIBRARY_PATH=/home/rw/sdl_core/bin
+      export LD_LIBRARY_PATH=/home/rw/sdl_core
 
       export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/include:/usr/local/lib 
 
@@ -301,7 +301,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       ./smartDeviceLinkCore > /home/rw/sdl_core/smartDeviceLinkCore.log 2>&1 # this routes all terminal text from sdl to  the smartDeviceLinkCore.log logfile
       ```
       3. Make the script executable with `$ chmod +x /home/rw/sdl_core/run_sdl.sh`
-      4. run the script with `# /home/rw/sdl_core/bin/run_sdl.sh` or `# cd /home/rw/sdl_core/bin; ./run_sdl.sh`
+      4. run the script with `# /home/rw/sdl_core/run_sdl.sh` or `# cd /home/rw/sdl_core; ./run_sdl.sh`
          1. To make the script run independently from your terminal (process won't close when you close the terminal: `# nohup /home/rw/sdl_core/run_sdl.sh &`
 
 
