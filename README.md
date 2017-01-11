@@ -44,28 +44,27 @@ an instance of SDL Core on Automotive Grade Linux (AGL) running on a raspberrypi
 
 # Detailed steps:
 Note: Anything that begins with the character '$' indicates that the following is to be entered into a linux terminal
-1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as
-   needed if running natively)
+1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as needed if running natively)
 
-  . Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
-  . Download Ubuntu 14.04 64 bit image (http://releases.ubuntu.com/14.04/)
-  . Create a new virtual machine in VBox (basically the virtual hardware your Ubuntu will ‘live’ in)
-  . You’ll need to set the number of processors it has, how much RAM to allocate, and create a virtual hard drive
-    2. RAM: 4 gigs (4098MB) is preferable
-    3. Disk size: 140 GB (You actually cannot have less than 90 or the
-    compilation will fail when building AGL. You need 120 for AGL and the
-    Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
-    local.conf after sourcing the aglsetup.sh script it will delete
-    artifacts after a recipe is built meaning you can have a smaller
-    Virtual Machine)
-    4. Number of processors: more than 1 (4 is preferable)
-    5. Video memory: I found at least 64 to be preferable
-  . In the VM’s Settings->Storage->Controller: IDE->Empty click on the DVD icon next to CD/DVD Drive underneath the “Attributes” section.
-    1. Select your downloaded Ubuntu 14.04 iso
-  . Start the Virtual Machine
-   . Go through the install process, selecting the appropriate city/time zone. Otherwise default settings should be fine.
-   . Reboot; Should have a working Ubuntu Linux VM now
-   . Install VBOX guest addtions
+   1. Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
+   2. Download Ubuntu 14.04 64 bit image (http://releases.ubuntu.com/14.04/)
+   3. Create a new virtual machine in VBox (basically the virtual hardware your Ubuntu will ‘live’ in)
+   4. You’ll need to set the number of processors it has, how much RAM to allocate, and create a virtual hard drive
+      2. RAM: 4 gigs (4098MB) is preferable
+      3. Disk size: 140 GB (You actually cannot have less than 90 or the
+         compilation will fail when building AGL. You need 120 for AGL and the
+         Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
+         local.conf after sourcing the aglsetup.sh script it will delete
+         artifacts after a recipe is built meaning you can have a smaller
+         Virtual Machine)
+      4. Number of processors: more than 1 (4 is preferable)
+      5. Video memory: I found at least 64 to be preferable
+   5. In the VM’s Settings->Storage->Controller: IDE->Empty click on the DVD icon next to CD/DVD Drive underneath the “Attributes” section.
+      1. Select your downloaded Ubuntu 14.04 iso
+   6. Start the Virtual Machine
+   7. Go through the install process, selecting the appropriate city/time zone. Otherwise default settings should be fine.
+   8. Reboot; Should have a working Ubuntu Linux VM now
+   9. Install VBOX guest addtions
       1. From VM's virtualbox options: Devices->Insert Guest Additions CD Image
       2. Should have a popup asking you to run the CD. If not, navigate to /media/[your username]/VBOXADDITIONS_[version] and run the install script
       3. Enable clipboard: Devices->Shared Clipboard->Bidirectional
@@ -86,11 +85,11 @@ Note: Anything that begins with the character '$' indicates that the following i
          11. Run setup_share: $ sudo setup_share
          12. ~/s should now be symlinked to Documents, meaning you can do any normal terminal commands (cd, cp, rm) in your Documents folder from there. Gui should also work
          13. Rerun "$ sudo setup_share" if your shared folder stops working
-   . Install lighter gui. Ubuntu's standard gui can make doing tasks (especially cpu intensive ones like compiling) really slow. We'll replace it with something lighter
+   10. Install lighter gui. Ubuntu's standard gui can make doing tasks (especially cpu intensive ones like compiling) really slow. We'll replace it with something lighter
          1. $ sudo apt update
          2. $ sudo apt install lxde lxsession openbox lxsession-logout
          3. Reboot your VM. During the next login select the new circular icon in the login box and select LXDE
-   . Install missing programs: sudo apt install make cmake gcc git gawk wget git-core diffstat
+   11. Install missing programs: sudo apt install make cmake gcc git gawk wget git-core diffstat
    unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm cpio curl autoconf
 
 
