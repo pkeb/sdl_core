@@ -169,13 +169,7 @@ Note: Anything that begins with the character '$' indicates that the following i
          2. Uncomment the line beginning with `kernel.printk = `
          3. You may have to reboot to get it to activate
       16. If at some point the text in your terminal starts behaving strangely and messed up, a simple fix is to restart your VM.
-      17. Mount new partition containing the sd card's free space 
-         1. `# mkdir /home/rw`
-         2. `# vi /etc/fstab`
-         3. insert new line after the other lines. replace "mmcblk0p3" with whatever your partition is:
-            1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
-         4. restart pi. /home/rw should have all that free space now
-      18. To enable video to the hdmi display (in pi AGL serial debug terminal): 
+      17. To enable video to the hdmi display (in pi AGL serial debug terminal): 
          1. `# cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
          2. `# vi /etc/xdg/weston/weston.ini`
          3. edit the file to be identical to one of the two below:
@@ -230,6 +224,12 @@ Note: Anything that begins with the character '$' indicates that the following i
             # Uncomment for 1080p on GeChic 1502i:
 
             #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+      18. Mount new partition containing the sd card's free space (from raspberrypi3 serial debug or AGL terminal):
+         1. `# mkdir /home/rw`
+         2. `# vi /etc/fstab`
+         3. insert new line after the other lines. replace "mmcblk0p3" with whatever your partition is:
+            1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
+         4. restart pi. /home/rw should have all that free space now
             ```
 
 
