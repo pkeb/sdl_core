@@ -168,12 +168,18 @@ Note: Anything that begins with the character '$' indicates that the following i
          3. //edit the file to be identical to below:
          4. /etc/xdg/weston/weston.ini:
             ```
-              [core]
-              backend=drm-backend.so
-              shell=desktop-shell.so
-              [output]
-              name=HDMI-A-1
-              transform=270
+            [core]
+
+            backend=drm-backend.so
+
+            shell=desktop-shell.so 
+
+            [output] 
+
+            name=HDMI-A-1
+
+            transform=270
+
             ```
 
 
