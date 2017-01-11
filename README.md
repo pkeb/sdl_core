@@ -47,22 +47,22 @@ Note: Anything that begins with the character '$' indicates that the following i
 1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as
    needed if running natively)
 
-   . Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
-   . Download Ubuntu 14.04 64 bit image (http://releases.ubuntu.com/14.04/)
-   . Create a new virtual machine in VBox (basically the virtual hardware your Ubuntu will ‘live’ in)
-   . You’ll need to set the number of processors it has, how much RAM to allocate, and create a virtual hard drive
-      2. RAM: 4 gigs (4098MB) is preferable
-      3. Disk size: 140 GB (You actually cannot have less than 90 or the
-         compilation will fail when building AGL. You need 120 for AGL and the
-         Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
-         local.conf after sourcing the aglsetup.sh script it will delete
-         artifacts after a recipe is built meaning you can have a smaller
-         Virtual Machine)
-      4. Number of processors: more than 1 (4 is preferable)
-      5. Video memory: I found at least 64 to be preferable
-   . In the VM’s Settings->Storage->Controller: IDE->Empty click on the DVD icon next to CD/DVD Drive underneath the “Attributes” section.
-      1. Select your downloaded Ubuntu 14.04 iso
-   . Start the Virtual Machine
+  . Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
+  . Download Ubuntu 14.04 64 bit image (http://releases.ubuntu.com/14.04/)
+  . Create a new virtual machine in VBox (basically the virtual hardware your Ubuntu will ‘live’ in)
+  . You’ll need to set the number of processors it has, how much RAM to allocate, and create a virtual hard drive
+    2. RAM: 4 gigs (4098MB) is preferable
+    3. Disk size: 140 GB (You actually cannot have less than 90 or the
+    compilation will fail when building AGL. You need 120 for AGL and the
+    Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
+    local.conf after sourcing the aglsetup.sh script it will delete
+    artifacts after a recipe is built meaning you can have a smaller
+    Virtual Machine)
+    4. Number of processors: more than 1 (4 is preferable)
+    5. Video memory: I found at least 64 to be preferable
+  . In the VM’s Settings->Storage->Controller: IDE->Empty click on the DVD icon next to CD/DVD Drive underneath the “Attributes” section.
+    1. Select your downloaded Ubuntu 14.04 iso
+  . Start the Virtual Machine
    . Go through the install process, selecting the appropriate city/time zone. Otherwise default settings should be fine.
    . Reboot; Should have a working Ubuntu Linux VM now
    . Install VBOX guest addtions
