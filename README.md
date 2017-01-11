@@ -222,9 +222,10 @@ Note: Anything that begins with the character '$' indicates that the following i
 
 5. Clone and build the bluez tools repository
    1. cd ~; git clone https://github.com/khvzak/bluez-tools.git 
-   2. compile tools (make sure the sdk is sourced): cd ~/bluez-tools; ./autogen.sh; ./configure; make 
+   2. If this is a new terminal make sure to source the sdk: '$ source ~/qt-agl-cross'
+   3. compile tools (make sure the sdk is sourced): cd ~/bluez-tools; ./autogen.sh; ./configure; make 
       1. Shouldn't need to 'make install'
-   3. Copy the following programs to the target's /usr/local/bin folder (create one if it doesn't exist already) from the local src folder: cp bt-adapter, bt-agent, bt-device, bt-network, and bt-obex
+   4. Copy the following programs to the target's /usr/local/bin folder (create one if it doesn't exist already) from the local src folder: cp bt-adapter, bt-agent, bt-device, bt-network, and bt-obex
 
 
 
