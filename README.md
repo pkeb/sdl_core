@@ -290,7 +290,7 @@ Note: Anything that begins with the character '$' indicates that the following i
    2. Running Smart Device Link
       1. After copying the sdl_core/build/bin folder rename it to /home/rw/sdl_core
          1. `# mv /home/rw/bin /home/rw/sdl_core`
-      2. make a start script with `$ vi /home/rw/sdl_core/run_sdl.sh`:
+      2. make a start script with `# vi /home/rw/sdl_core/run_sdl.sh`:
       ```
       #!/bin/sh 
 
