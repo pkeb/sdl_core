@@ -284,6 +284,7 @@ Note: Anything that begins with the character '$' indicates that the following i
          4. `# scan on` 
             1. start looking for bluetooth devices on your phone. When the relevant mac appears (should say something about a phone next to it) do:
             2. `# pair [phone mac address]` 
+               1. Any time you need to enter a device MAC address, bluetoothctl accepts tab completion of MAC addresses (meaning if you want to pair to device C0:AB:15:32:1R:12, you can type `# pair C0:AB` followed by pressing tab. If there are no other C0:AB:XX:XX:XX:XX:XX devices on record it will complete the address for you)
             3. follow any instructions on phone and onscreen
             4. `# connect [phone mac address]`
    2. Running Smart Device Link
