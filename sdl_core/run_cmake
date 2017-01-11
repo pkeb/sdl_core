@@ -1,4 +1,0 @@
-#!/bin/bash 
-
-#cmake -DFORCE_3RD_PARTY=ON -DCMAKE_TOOLCHAIN_FILE=../agl.cmake ..
-cmake -DCMAKE_TOOLCHAIN_FILE=../agl.cmake ..
