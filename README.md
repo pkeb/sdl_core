@@ -258,7 +258,7 @@ Note: Anything that begins with the character '$' indicates that the following i
    3. (will need to set git global username and email before this will work. Just attempt to clone this repository and git will error and it will tell you what to do, then rerun the command)
    4. Temporarily backup your /usr/local/lib and /usr/local/include folders: `sudo mv /usr/local/lib /usr/local/lib_bak; sudo mv /usr/local/include /usr/local/include_bak; sudo mkdir -p /usr/local/lib; sudo mkdir -p /usr/local/include`
    5. Create a folder for your build and run: `cp ../run_cmake ./; ./run_cmake; make; make install`
-   6. Copy the [your build folder]/bin folder to the target. This is the sdl core executable
+   6. Copy the [your build folder]/bin folder to the target (/home/rw). This is the sdl core executable folder
    7. Copy the /usr/local/lib and /usr/local/include folders and contents to the target (Make sure they are placed in the same paths they were retrieved from. Some of the 3rd party libraries and headers install locally (log4cxx)). Delete your temporary /usr/local/lib and /usr/local/include directories and restore your backups.
 
 
@@ -268,6 +268,40 @@ Note: Anything that begins with the character '$' indicates that the following i
    3. compile tools (make sure the sdk is sourced): `cd ~/bluez-tools; ./autogen.sh; ./configure; make`
       1. Shouldn't need to 'make install'
    4. Copy the following programs to the target's /usr/local/bin folder (create one if it doesn't exist already) from the local src folder: cp bt-adapter, bt-agent, bt-device, bt-network, and bt-obex
+
+
+6. Configure SDL on AGL 
+   1. Enabling bluetooth 
+      1. From either a terminal from the AGL desktop or over a serial debug connection:
+      2. `$ systemctl enable bluetooth
+      3. `$ systemctl restart bluetooth`
+      4. `$ rfkill unblock bluetooth`
+      5. To connect a device to the pi bluetooth:
+         1. `$ bluetoothctl`
+         2. `$ power on`
+         3. `$ agent on`
+         4. `$ scan on` 
+            1. start looking for bluetooth devices on your phone. When the relevant mac appears (should say something about a phone next to it) do:
+            2. `$ pair [phone mac address]` 
+            3. follow any instructions on phone and onscreen
+            4. `$ connect [phone mac address]`
+   2. Running Smart Device Link
+      1. After copying the sdl_core/build/bin folder rename it to /home/rw/sdl_core
+      2. make a start script with `$ vi /home/rw/bin/run_sdl.sh`:
+      ```
+      #!/bin/sh 
+
+      export LD_LIBRARY_PATH=. # if you named your bin folder to "sdl_core" you could do `export LD_LIBRARY_PATH=/home/rw/sdl_core` to make this script executable from anywhere
+
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/include:/usr/local/lib 
+
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/include/log4cxx
+
+      ./smartDeviceLinkCore > /home/rw/sdl_core/smartDeviceLinkCore.log 2>&1 # this routes all terminal text from sdl to  the smartDeviceLinkCore.log logfile
+      ```
+      3. Make the script executable with `$ chmod +x /home/rw/sdl_core/run_sdl.sh`
+      4. run the script with `# /home/rw/sdl_core/run_sdl.sh` or `# cd /home/rw/sdl_core; ./run_sdl.sh`
+         1. To make the script run independently from your terminal (process won't close when you close the terminal: `# nohup /home/rw/sdl_core/run_sdl.sh &`
 
 
 
