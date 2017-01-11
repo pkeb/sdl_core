@@ -53,7 +53,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       2. RAM: 4 gigs (4098MB) is preferable
       3. Disk size: 140 GB (You actually cannot have less than 90 or the
          compilation will fail when building AGL. You need 120 for AGL and the
-         Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
+         Cross SDK. (If you add 'INHERIT += "rm_work"' To the AGL yocto build's
          local.conf after sourcing the aglsetup.sh script it will delete
          artifacts after a recipe is built meaning you can have a smaller
          Virtual Machine)
