@@ -235,7 +235,7 @@ Note: Anything that begins with the character '$' indicates that the following i
 3. Create and install AGL cross sdk 
    1. If using a seperate terminal or in a new session since creating the AGL
       image:
-      1. `$ repo sync`
+      1. `$ cd ~; repo sync`
       2. `$ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
          1. If at any time the build fails due to a missing or extra yocto configuration file try using the '-f' flag to force a reconfiguration:
          2. `$ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
