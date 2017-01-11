@@ -304,7 +304,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       ```
       3. Make the script executable with `# chmod +x /home/rw/sdl_core/run_sdl.sh`
       4. run the script with `# /home/rw/sdl_core/run_sdl.sh` or `# cd /home/rw/sdl_core; ./run_sdl.sh`
-         1. To make the script run independently from your terminal (process won't close when you close the terminal: `# nohup /home/rw/sdl_core/run_sdl.sh &`
+         1. To make the script run independently from your terminal (process won't close when you close the terminal): `# nohup /home/rw/sdl_core/run_sdl.sh &`
 
 
 
