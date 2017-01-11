@@ -224,13 +224,13 @@ Note: Anything that begins with the character '$' indicates that the following i
             # Uncomment for 1080p on GeChic 1502i:
 
             #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+            ```
       18. Mount new partition containing the sd card's free space (from raspberrypi3 serial debug or AGL terminal):
          1. `# mkdir /home/rw`
          2. `# vi /etc/fstab`
          3. insert new line after the other lines. replace "mmcblk0p3" with whatever your partition is:
             1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
          4. restart pi. /home/rw should have all that free space now
-            ```
 
 
 3. Create and install AGL cross sdk 
