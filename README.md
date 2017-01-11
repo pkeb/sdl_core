@@ -252,7 +252,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       ` . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi`
 
    6. save and close ~/qt-agl-cross 
-   7. To use the sdk from a terminal do '$ ~/qt-agl-cross' to setup your environment
+   7. To use the sdk from a terminal do '$ source ~/qt-agl-cross' to setup your environment
 
 
 4. Clone and build SDL
