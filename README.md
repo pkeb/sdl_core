@@ -40,6 +40,7 @@ an instance of SDL Core on Automotive Grade Linux (AGL) running on a raspberrypi
    3. Create and install AGL cross sdk 
    4. Clone and build SDL
    5. Clone and build the bluez tools repository 
+   6. Configure SDL on AGL 
 
 
 # Detailed steps:
