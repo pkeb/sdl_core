@@ -6,8 +6,6 @@
 
 # SmartDeviceLink (SDL)
 
-This is an experimental fork of the SDL main line. 
-
 SmartDeviceLink (SDL) is a standard set of protocols and messages that connect applications on a smartphone to a vehicle head unit. This messaging enables a consumer to interact with their application using common in-vehicle interfaces such as a touch screen display, embedded voice recognition, steering wheel controls and various vehicle knobs and buttons. There are three main components that make up the SDL ecosystem.
 
   * The [Core](https://github.com/smartdevicelink/sdl_core) component is the software which Vehicle Manufacturers (OEMs)  implement in their vehicle head units. Integrating this component into their head unit and HMI based on a set of guidelines and templates enables access to various smartphone applications.
@@ -30,6 +28,208 @@ The Core component of SDL runs on a vehicle's computing system (head unit). Core
 ## Project Status
 We're ramping up our efforts to get SmartDeviceLink developed and maintained directly in the open. For the Mobile libraries, we're expecting better integration soon, SDL Core is slightly more complicated. We are currently working on generating documentation, creating a developer portal, an open forum, Mobile validation, and everything else that we've been asked for to renew the community's interest in this project. From a technical standpoint, SDL is stable, and the most work is being put into making it a more robust solution for app connectivity. We are, however, definitely looking for and interested in other people and company's contributions to SDL whether it be feature based, bug fixes, healthy conversation, or even just suggestions for improvement.
 
+
+
+## COMPILATION FOR ARM/AUTOMOTIVE GRADE LINUX
+This is an extensive guide on compilation, installation, and configuration of
+an instance of SDL Core on Automotive Grade Linux (AGL) running on a raspberrypi3.
+
+# Overview of steps:
+   1. Setup development environment (Dev VM or native Ubuntu 14.04)
+   2. Create and install AGL image (if not already created)
+   3. Create and install AGL cross sdk 
+   4. Clone and build SDL
+   5. Clone and build the bluez tools repository 
+
+
+# Detailed steps:
+# Note: Anything that begins with the character '$' indicates that the
+# following is to be entered into a linux terminal
+1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as
+   needed if running natively)
+
+   . Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
+   . Download Ubuntu 14.04 64 bit image (http://releases.ubuntu.com/14.04/)
+   . Create a new virtual machine in VBox (basically the virtual hardware your Ubuntu will ‘live’ in)
+   . You’ll need to set the number of processors it has, how much RAM to allocate, and create a virtual hard drive
+      2. RAM: 4 gigs (4098MB) is preferable
+      3. Disk size: 140 GB (You actually cannot have less than 90 or the
+         compilation will fail when building AGL. You need 120 for AGL and the
+         Cross SDK. If you add 'INHERIT += "rm_work"' To the AGL yocto build's
+         local.conf after sourcing the aglsetup.sh script it will delete
+         artifacts after a recipe is built meaning you can have a smaller
+         Virtual Machine)
+      4. Number of processors: more than 1 (4 is preferable)
+      5. Video memory: I found at least 64 to be preferable
+   . In the VM’s Settings->Storage->Controller: IDE->Empty click on the DVD icon next to CD/DVD Drive underneath the “Attributes” section.
+      1. Select your downloaded Ubuntu 14.04 iso
+   . Start the Virtual Machine
+   . Go through the install process, selecting the appropriate city/time zone. Otherwise default settings should be fine.
+   . Reboot; Should have a working Ubuntu Linux VM now
+   . Install VBOX guest addtions
+      1. From VM's virtualbox options: Devices->Insert Guest Additions CD Image
+      2. Should have a popup asking you to run the CD. If not, navigate to /media/[your username]/VBOXADDITIONS_[version] and run the install script
+      3. Enable clipboard: Devices->Shared Clipboard->Bidirectional
+      4. Enable drag and drop: Devices->Drag and Drop->Bidirectional
+      5. Enable Shared folders:
+         1. Devices->Shared Folders->Shared Folders Settings
+         2.  Click the "add folder" icon on the right-top of the settings window
+         3. Folder path dropdown->Other ...->Select your desired host folder (I normally choose "Documents")
+         4. A name should be automatically filled in for "Folder Name", remember your "Folder Name".
+         5. Click auto-mount and make permanent
+         6. Click ok
+         7. Click ok
+         8. make a folder ~/s ($ mkdir ~/s). "~" is Linux shorthand for /home/[username]
+         9. With root permissions (sudo) create a script "setup_share" at /usr/local/bin containing the following text:
+            1. #!/bin/bash
+            2. mount -t vboxsf [your "Folder Name"] ~/s
+         10. make setup_share executable: $ sudo chmod+x /usr/local/bin/setup_share
+         11. Run setup_share: $ sudo setup_share
+         12. ~/s should now be symlinked to Documents, meaning you can do any normal terminal commands (cd, cp, rm) in your Documents folder from there. Gui should also work
+         13. Rerun "$ sudo setup_share" if your shared folder stops working
+   . Install lighter gui. Ubuntu's standard gui can make doing tasks (especially cpu intensive ones like compiling) really slow. We'll replace it with something lighter
+         1. $ sudo apt update
+         2. $ sudo apt install lxde lxsession openbox lxsession-logout
+         3. Reboot your VM. During the next login select the new circular icon in the login box and select LXDE
+   . Install missing programs: sudo apt install make cmake gcc git gawk wget git-core diffstat
+   unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm cpio curl autoconf
+
+
+2. Create and install AGL image (if not already created)
+
+   . $ mkdir ~/bin 
+   . $ export PATH=~/bin:$PATH 
+   . $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+   . $ chmod a+x ~/bin/repo 
+   . Select which source to download. See http://docs.automotivelinux.org/docs/getting_started/en/dev/reference/source-code.html for more options. To download the master source do the following:
+      1. $ repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo 
+   . $ repo sync
+   . $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+   . If you add 'INHERIT += "rm_work"' To the AGL yocto build's local.conf after sourcing the aglsetup.sh script it will delete artifacts after a recipe is built meaning you can have a smaller Virtual Machine hard disk. Rerunning aglsetup.sh can overwrite this value so make sure you check it after resourcing the script.
+   . $ bitbake agl-demo-platform
+      1. This command will take a LOOOONG time. On a decent laptop it takes 5 1/2 hours+
+   . attach sdcard usb reader (with sdcard inside)
+   . from VirtualBox->Devices->USB->USB Settings: add sdcard reader
+   . View details about attached sd card via $ dmesg
+   . Make sure all sd card partitions are unmonted:
+      1. $ sudo umount /dev/sdb1 
+      2. $ sudo umount /dev/sdb 
+      3. Repeat as necessary based on $ dmesg 
+   . $ sudo dd
+   if=/home/duran/build/tmp/deploy/images/raspberrypi3/agl-demo-platform-raspberrypi3.rpi-sdimg of=/dev/sdX bs=4M
+   . $ sync
+   . To watch the progress of the command do the following in a *different* terminal: $ watch grep -e Dirty: -e Writeback: /proc/meminfo
+   . Add partition to mount unused space on sd card (it's also possible to expand the current partition to use up the free space, this is only one method to deal with the problem)
+   . $ fdisk /dev/sdb 
+   . List *free* space on the card 
+      . $ F
+      . Make a note of the beginning of the large empty block (NOT the 2048 sector). 
+      This sector will be used later (OPEN_START_SECTOR)
+   . $ n
+   . $ p
+   . Hit enter for default partition number 
+   . $ OPEN_START_SECTOR 
+   . press enter till we are back at the main menu
+   . $ w
+   . We need to make file system for the new partition (probably /dev/sdb3,
+   eject and replug/umount the card and use '$ dmesg' to recheck)
+   . $ mkfs -t ext4 /dev/sdb3 
+   . $ eject /dev/sdb 
+   . Remove sdcard reader and place sd card into raspberry pi3. 
+   . Plug in power to boot pi3 
+   . How to fix video: video doesn't always work. To fix, you'll need to a serial debug connection to the pi 
+      . You need a raspberry pi 3 serial debug cable (it connects the
+      motherboard pins and the other end is a usb) 
+      . install package 'screen' if not installed (sudo apt install screen)
+      . Physically install serial debug cable to rasppi board (you have to
+      connect wires to pins on the motherboard, refer to instructions that come
+      with your cable)
+      . Connect usb end of serial debug cable to laptop
+      . from VirtualBox->Devices->USB->USB Settings: add serial device
+      . unplug and replug the serial debug cable usb
+      . use "$ dmesg" and verify that a new device was detected and assigned
+      to /dev/ttyUSB0
+      . Connect screen to serial connection: 
+      . $ sudo screen /dev/ttyUSB0 115200  
+      . should just be a blinking cursor
+      . plug in power cable to rasppi
+      . you should see text in your "screen" terminal. It has become a terminal for the pi
+      . When it prompts for user just type "root" and hit enter
+      . If it stops eventually and you don't see the user prompt, try pressing enter to get it to repopulate
+      . Once logged in, log messages may pop up in the middle of whatever
+      you're doing, you can disable these by: 
+         . $ vi /etc/sysctl.conf
+         . Uncomment the line beginning with "kernel.printk = "
+         . You may have to reboot to get it to activate
+      . If at some point the text in your terminal starts behaving strangely and messed up, a simple fix is to restart your VM.
+      . Mount new partition containing the sd card's free space 
+         . mkdir /home/rw
+         . $ vi /etc/fstab
+         . # insert new line after the other lines. replace "mmcblk0p3" with
+      whatever your partition is:
+            . /dev/mmcblk0p3 /home/rw ext4 defaults 0 2
+         . # restart pi. /home/rw should have all that free space now
+      . To enable video to the hdmi display (in pi AGL serial debug terminal): 
+         . $ cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak
+         . $ vi /etc/xdg/weston/weston.ini
+         . //edit the file to be identical to below:
+         . /etc/xdg/weston/weston.ini:
+            [core]
+            backend=drm-backend.so
+            shell=desktop-shell.so
+            [output]
+            name=HDMI-A-1
+            transform=270
+
+
+3. Create and install AGL cross sdk 
+
+   . Compile and install the AGL crosssdk 
+      . Note: text after a "$ " indicates the following text is a terminal command
+      . Create rasp pi image and AGL cross sdk 
+   . $ mkdir ~/bin
+   . $ export PATH=~/bin:$PATH
+   . $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+   . $ chmod a+x ~/bin/repo repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+   . $ repo sync
+   . $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+   . If at any time the build fails due to a missing or extra yocto
+   configuration file try using the '-f' flag to force a reconfiguration:
+      . $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+   . $ bitbake agl-demo-platform-crosssdk
+      . This command can take a LOOOONG time. On a decent laptop it can take 5 1/2 hours+
+   . $ cd ~/build/tmp/deploy/sdk
+   . $ sudo ./poky-agl-glibc-x86_64-agl-demo-platform-crosssdk-cortexa7hf-neon-vfpv4-toolchain-3.0.0+snapshot.sh
+   . Create a helpful sourcable script to the sdk
+   . $ gedit ~/qt-agl-cross:
+      . #!/bin/bash
+      . . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi
+   . save and close ~/qt-agl-cross 
+   . To use the sdk from a terminal do '$ ~/qt-agl-cross' to setup your environment
+
+
+4. Clone and build SDL
+
+   . move to another terminal tab and source the sdk (repeat this command if you open a new tab in order to build properly):  . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi 
+   . Clone this repository: $ cd ~; git clone https://github.com/pkeb/sdl_core
+      . This repository is modified to compile for AGL from the mainline. 
+   . (will need to set git global username and email before this will work. Just attempt to clone this repository and git will error and it will tell you what to do, then rerun the command)
+   . Temporarily backup your /usr/local/lib and /usr/local/include folders: sudo mv /usr/local/lib /usr/local/lib_bak; sudo mv /usr/local/include /usr/local/include_bak; sudo mkdir -p /usr/local/lib; sudo mkdir -p /usr/local/include
+   . Create a folder for your build and run: cp ../run_cmake ./; ./run_cmake;
+      make; make install 
+   . Copy the [your build folder]/bin folder to the target. This is the sdl core executable
+   . Copy the /usr/local/lib and /usr/local/include folders and contents to the target (Make sure they are placed in the same paths they were retrieved from. Some of the 3rd party libraries and headers install locally (log4cxx)). Delete your temporary /usr/local/lib and /usr/local/include directories and restore your backups.
+
+
+5. Clone and build the bluez tools repository
+
+   . cd ~; git clone https://github.com/khvzak/bluez-tools.git 
+   . compile tools (make sure the sdk is sourced): cd ~/bluez-tools; ./autogen.sh; ./configure; make; make install
+   . Copy the following programs to the target's /usr/local/bin folder (create one if it doesn't exist already) from the local src folder: cp bt-adapter, bt-agent, bt-device, bt-network, and bt-obex
+
+
+
+## COMPILATION FOR X86_64 OR ARM/QNX
 # Getting Started
 A quick guide to installing, configuring, and running an instance of the SDL Core on a linux OS.
 
