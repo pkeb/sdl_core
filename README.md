@@ -174,8 +174,8 @@ Note: Anything that begins with the character '$' indicates that the following i
             1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
          4. # restart pi. /home/rw should have all that free space now
       18. To enable video to the hdmi display (in pi AGL serial debug terminal): 
-         1. `$ cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
-         2. `$ vi /etc/xdg/weston/weston.ini`
+         1. `# cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
+         2. `# vi /etc/xdg/weston/weston.ini`
          3. //edit the file to be identical to below:
          4. /etc/xdg/weston/weston.ini:
             ```
