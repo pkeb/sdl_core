@@ -292,7 +292,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       ```
       #!/bin/sh 
 
-      export LD_LIBRARY_PATH=/home/rw/sdl_core/bin`
+      export LD_LIBRARY_PATH=/home/rw/sdl_core/bin
 
       export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/include:/usr/local/lib 
 
