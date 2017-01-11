@@ -263,7 +263,12 @@ Note: Anything that begins with the character '$' indicates that the following i
       1. This repository is modified to compile for AGL from the mainline. 
    3. (will need to set git global username and email before this will work. Just attempt to clone this repository and git will error and it will tell you what to do, then rerun the command)
    4. Temporarily backup your /usr/local/lib and /usr/local/include folders: `sudo mv /usr/local/lib /usr/local/lib_bak; sudo mv /usr/local/include /usr/local/include_bak; sudo mkdir -p /usr/local/lib; sudo mkdir -p /usr/local/include`
-   5. Create a folder for your build and run: `cp ../run_cmake ./; ./run_cmake; make; make install`
+   5. To create a folder for your build and compile:
+      1. `$ cd ~/sdl_core; mkdir build; cd build;`
+      2. `$ cp ../run_cmake ./;`
+      3. `$ ./run_cmake;` 
+      4. `$ make;`
+      5. `$ make install`
    6. Copy the [your build folder]/bin folder to the target (/home/rw). This is the sdl core executable folder
    7. Copy the /usr/local/lib and /usr/local/include folders and contents to the target (Make sure they are placed in the same paths they were retrieved from. Some of the 3rd party libraries and headers install locally (log4cxx)). Delete your temporary /usr/local/lib and /usr/local/include directories and restore your backups.
 
