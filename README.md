@@ -43,8 +43,7 @@ an instance of SDL Core on Automotive Grade Linux (AGL) running on a raspberrypi
 
 
 # Detailed steps:
-# Note: Anything that begins with the character '$' indicates that the
-# following is to be entered into a linux terminal
+Note: Anything that begins with the character '$' indicates that the following is to be entered into a linux terminal
 1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as
    needed if running natively)
 
