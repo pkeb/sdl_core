@@ -137,6 +137,7 @@ Note: Anything that begins with the character '$' indicates that the following i
    21. `$ p`
    22. Hit enter for default partition number 
    23. `$ OPEN_START_SECTOR`
+      1. Replace OPEN_START_SECTOR with the beginning of the free space you noted earlier
    24. press enter till we are back at the main menu
    25. `$ w`
    26. We need to make file system for the new partition (probably /dev/sdb3, eject and replug/umount the card and use '$ dmesg' to recheck)
