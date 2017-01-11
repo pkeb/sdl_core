@@ -177,7 +177,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       18. To enable video to the hdmi display (in pi AGL serial debug terminal): 
          1. `# cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
          2. `# vi /etc/xdg/weston/weston.ini`
-         3. //edit the file to be identical to below:
+         3. edit the file to be identical to one of the two below:
          4. /etc/xdg/weston/weston.ini for regular desktop usage:
             ```
             [core]
