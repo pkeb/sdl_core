@@ -225,6 +225,7 @@ Note: Anything that begins with the character '$' indicates that the following i
 
             #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
             ```
+         6. Video *should* work now
    32. Mount new partition containing the sd card's free space (from raspberrypi3 serial debug or AGL terminal):
          1. `# mkdir /home/rw`
          2. `# vi /etc/fstab`
