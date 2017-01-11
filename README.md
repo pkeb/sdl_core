@@ -79,17 +79,17 @@ Note: Anything that begins with the character '$' indicates that the following i
          7. Click ok
          8. make a folder ~/s ($ mkdir ~/s). "~" is Linux shorthand for /home/[username]
          9. With root permissions (sudo) create a script "setup_share" at /usr/local/bin containing the following text:
-         ```
+            ```
             #!/bin/bash
 
             mount -t vboxsf [your "Folder Name"] ~/s 
-         ```
-            1. For example my script is the following:
+            ```
+            For example my script is the following:
             ```
             #!/bin/bash 
 
             mount -t vboxsf Documents ~/s 
-         ```
+            ```
          10. make setup_share executable: $ sudo chmod+x /usr/local/bin/setup_share
          11. Run setup_share: `$ sudo setup_share`
          12. ~/s should now be symlinked to Documents, meaning you can do any normal terminal commands (cd, cp, rm) in your Documents folder from there. Gui should also work
