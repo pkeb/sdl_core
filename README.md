@@ -274,7 +274,7 @@ Note: Anything that begins with the character '$' indicates that the following i
 6. Configure SDL on AGL 
    1. Enabling bluetooth 
       1. From either a terminal from the AGL desktop or over a serial debug connection:
-      2. `# systemctl enable bluetooth
+      2. `# systemctl enable bluetooth`
       3. `# systemctl restart bluetooth`
       4. `# rfkill unblock bluetooth`
       5. To connect a device to the pi bluetooth:
