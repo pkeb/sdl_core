@@ -79,59 +79,62 @@ Note: Anything that begins with the character '$' indicates that the following i
          7. Click ok
          8. make a folder ~/s ($ mkdir ~/s). "~" is Linux shorthand for /home/[username]
          9. With root permissions (sudo) create a script "setup_share" at /usr/local/bin containing the following text:
-            1. #!/bin/bash
-            2. mount -t vboxsf [your "Folder Name"] ~/s
+         ```
+            #!/bin/bash
+
+            mount -t vboxsf [your "Folder Name"] ~/s 
+         ```
          10. make setup_share executable: $ sudo chmod+x /usr/local/bin/setup_share
-         11. Run setup_share: $ sudo setup_share
+         11. Run setup_share: `$ sudo setup_share`
          12. ~/s should now be symlinked to Documents, meaning you can do any normal terminal commands (cd, cp, rm) in your Documents folder from there. Gui should also work
-         13. Rerun "$ sudo setup_share" if your shared folder stops working
+         13. Rerun `$ sudo setup_share` if your shared folder stops working
    10. Install lighter gui. Ubuntu's standard gui can make doing tasks (especially cpu intensive ones like compiling) really slow. We'll replace it with something lighter
-         1. $ sudo apt update
-         2. $ sudo apt install lxde lxsession openbox lxsession-logout
+         1. `$ sudo apt update`
+         2. `$ sudo apt install lxde lxsession openbox lxsession-logout`
          3. Reboot your VM. During the next login select the new circular icon in the login box and select LXDE
-   11. Install missing programs: sudo apt install make cmake gcc git gawk wget git-core diffstat
-   unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm cpio curl autoconf
+   11. Install missing programs: `sudo apt install make cmake gcc git gawk wget git-core diffstat
+   unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm cpio curl autoconf`
 
 
 2. Create and install AGL image (if not already created)
-   1. $ mkdir ~/bin 
-   2. $ export PATH=~/bin:$PATH 
-   3. $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-   4. $ chmod a+x ~/bin/repo 
+   1. `$ mkdir ~/bin`
+   2. `$ export PATH=~/bin:$PATH`
+   3. `$ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo`
+   4. `$ chmod a+x ~/bin/repo `
    5. Select which source to download. See http://docs.automotivelinux.org/docs/getting_started/en/dev/reference/source-code.html for more options. To download the master source do the following:
-      1. $ repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo 
-   6. $ repo sync
-   7. $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+      1. `$ repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo`
+   6. `$ repo sync`
+   7. `$ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
       1. If at any time the build fails due to a missing or extra yocto configuration file try using the '-f' flag to force a reconfiguration:
-      2. $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+      2. `$ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
    8. If you add 'INHERIT += "rm_work"' To the AGL yocto build's local.conf after sourcing the aglsetup.sh script it will delete artifacts after a recipe is built meaning you can have a smaller Virtual Machine hard disk. Rerunning aglsetup.sh can overwrite this value so make sure you check it after resourcing the script.
-   9. $ bitbake agl-demo-platform
+   9. `$ bitbake agl-demo-platform`
       1. This command will take a LOOOONG time. On a decent laptop it takes 5 1/2 hours+
    10. attach sdcard usb reader (with sdcard inside)
    11. from VirtualBox->Devices->USB->USB Settings: add sdcard reader
    12. View details about attached sd card via $ dmesg
    13. Make sure all sd card partitions are unmonted:
-      1. $ sudo umount /dev/sdb1 
-      2. $ sudo umount /dev/sdb 
+      1. `$ sudo umount /dev/sdb1`
+      2. `$ sudo umount /dev/sdb`
       3. Repeat as necessary based on $ dmesg 
-   14. $ sudo dd
+   14. `$ sudo dd`
    if=/home/duran/build/tmp/deploy/images/raspberrypi3/agl-demo-platform-raspberrypi3.rpi-sdimg of=/dev/sdX bs=4M
-   15. $ sync
+   15. `$ sync`
    16. To watch the progress of the command do the following in a *different* terminal: $ watch grep -e Dirty: -e Writeback: /proc/meminfo
    17. Add partition to mount unused space on sd card (it's also possible to expand the current partition to use up the free space, this is only one method to deal with the problem)
-   18. $ fdisk /dev/sdb 
+   18. `$ fdisk /dev/sdb`
    19. List *free* space on the card 
-      1. $ F
+      1. `$ F`
       2. Make a note of the beginning of the large empty block (NOT the 2048 sector). This sector will be used later (OPEN_START_SECTOR)
-   20. $ n
-   21. $ p
+   20. `$ n`
+   21. `$ p`
    22. Hit enter for default partition number 
-   23. $ OPEN_START_SECTOR 
+   23. `$ OPEN_START_SECTOR`
    24. press enter till we are back at the main menu
-   25. $ w
+   25. `$ w`
    26. We need to make file system for the new partition (probably /dev/sdb3, eject and replug/umount the card and use '$ dmesg' to recheck)
-   27. $ mkfs -t ext4 /dev/sdb3 
-   28. $ eject /dev/sdb 
+   27. `$ mkfs -t ext4 /dev/sdb3` 
+   28. `$ eject /dev/sdb`
    29. Remove sdcard reader and place sd card into raspberry pi3. 
    30. Plug in power to boot pi3 
    31. How to fix video: video doesn't always work. To fix, you'll need to a serial debug connection to the pi 
@@ -144,29 +147,29 @@ Note: Anything that begins with the character '$' indicates that the following i
       4. Connect usb end of serial debug cable to laptop
       5. from VirtualBox->Devices->USB->USB Settings: add serial device
       6. unplug and replug the serial debug cable usb
-      7. use "$ dmesg" and verify that a new device was detected and assigned
+      7. use `$ dmesg` and verify that a new device was detected and assigned
       to /dev/ttyUSB0
       8. Connect screen to serial connection: 
-      9. $ sudo screen /dev/ttyUSB0 115200  
+      9. `$ sudo screen /dev/ttyUSB0 115200`
       10. should just be a blinking cursor
       11. plug in power cable to rasppi
       12. you should see text in your "screen" terminal. It has become a terminal for the pi
       13. When it prompts for user just type "root" and hit enter
       14. If it stops eventually and you don't see the user prompt, try pressing enter to get it to repopulate
       15. Once logged in, log messages may pop up in the middle of whatever you're doing, you can disable these by: 
-         1. $ vi /etc/sysctl.conf
-         2. Uncomment the line beginning with "kernel.printk = "
+         1. P$ vi /etc/sysctl.conf`
+         2. Uncomment the line beginning with `kernel.printk = `
          3. You may have to reboot to get it to activate
       16. If at some point the text in your terminal starts behaving strangely and messed up, a simple fix is to restart your VM.
       17. Mount new partition containing the sd card's free space 
-         1. mkdir /home/rw
-         2. $ vi /etc/fstab
+         1. `$ mkdir /home/rw`
+         2. `$ vi /etc/fstab`
          3. # insert new line after the other lines. replace "mmcblk0p3" with whatever your partition is:
-            1. /dev/mmcblk0p3 /home/rw ext4 defaults 0 2
+            1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
          4. # restart pi. /home/rw should have all that free space now
       18. To enable video to the hdmi display (in pi AGL serial debug terminal): 
-         1. $ cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak
-         2. $ vi /etc/xdg/weston/weston.ini
+         1. `$ cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
+         2. `$ vi /etc/xdg/weston/weston.ini`
          3. //edit the file to be identical to below:
          4. /etc/xdg/weston/weston.ini:
             ```
@@ -188,39 +191,38 @@ Note: Anything that begins with the character '$' indicates that the following i
 3. Create and install AGL cross sdk 
    1. If using a seperate terminal or in a new session since creating the AGL
       image:
-      1. $ repo sync 
-      2. $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+      1. `$ repo sync`
+      2. `$ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
          1. If at any time the build fails due to a missing or extra yocto configuration file try using the '-f' flag to force a reconfiguration:
-         2. $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
-   2. $ bitbake agl-demo-platform-crosssdk
+         2. `$ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack`
+   2. `$ bitbake agl-demo-platform-crosssdk`
       1. This command can take a LOOOONG time. On a decent laptop it can take 5 1/2 hours+
    3. Install sdk 
-      1. $ cd ~/build/tmp/deploy/sdk
-      2. $ sudo ./poky-agl-glibc-x86_64-agl-demo-platform-crosssdk-cortexa7hf-neon-vfpv4-toolchain-3.0.0+snapshot.sh
+      1. `$ cd ~/build/tmp/deploy/sdk`
+      2. `$ sudo ./poky-agl-glibc-x86_64-agl-demo-platform-crosssdk-cortexa7hf-neon-vfpv4-toolchain-3.0.0+snapshot.sh`
    4. Create a helpful sourcable script to the sdk
-   5. $ gedit ~/qt-agl-cross:
-      1. #!/bin/bash
-      2. . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi
+   5. `$ gedit ~/qt-agl-cross`:
+      `#!/bin/bash`
+      ` . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi`
    6. save and close ~/qt-agl-cross 
    7. To use the sdk from a terminal do '$ ~/qt-agl-cross' to setup your environment
 
 
 4. Clone and build SDL
    1. move to another terminal tab and source the sdk (repeat this command if you open a new tab in order to build properly):  . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi 
-   2. Clone this repository: '$ cd ~; git clone https://github.com/pkeb/sdl_core'
+   2. Clone this repository: `$ cd ~; git clone https://github.com/pkeb/sdl_core`
       1. This repository is modified to compile for AGL from the mainline. 
    3. (will need to set git global username and email before this will work. Just attempt to clone this repository and git will error and it will tell you what to do, then rerun the command)
-   4. Temporarily backup your /usr/local/lib and /usr/local/include folders: sudo mv /usr/local/lib /usr/local/lib_bak; sudo mv /usr/local/include /usr/local/include_bak; sudo mkdir -p /usr/local/lib; sudo mkdir -p /usr/local/include
-   5. Create a folder for your build and run: cp ../run_cmake ./; ./run_cmake;
-      make; make install 
+   4. Temporarily backup your /usr/local/lib and /usr/local/include folders: `sudo mv /usr/local/lib /usr/local/lib_bak; sudo mv /usr/local/include /usr/local/include_bak; sudo mkdir -p /usr/local/lib; sudo mkdir -p /usr/local/include`
+   5. Create a folder for your build and run: `cp ../run_cmake ./; ./run_cmake; make; make install`
    6. Copy the [your build folder]/bin folder to the target. This is the sdl core executable
    7. Copy the /usr/local/lib and /usr/local/include folders and contents to the target (Make sure they are placed in the same paths they were retrieved from. Some of the 3rd party libraries and headers install locally (log4cxx)). Delete your temporary /usr/local/lib and /usr/local/include directories and restore your backups.
 
 
 5. Clone and build the bluez tools repository
-   1. cd ~; git clone https://github.com/khvzak/bluez-tools.git 
-   2. If this is a new terminal make sure to source the sdk: '$ source ~/qt-agl-cross'
-   3. compile tools (make sure the sdk is sourced): cd ~/bluez-tools; ./autogen.sh; ./configure; make 
+   1. `cd ~; git clone https://github.com/khvzak/bluez-tools.git`
+   2. If this is a new terminal make sure to source the sdk: `$ source ~/qt-agl-cross`
+   3. compile tools (make sure the sdk is sourced): `cd ~/bluez-tools; ./autogen.sh; ./configure; make`
       1. Shouldn't need to 'make install'
    4. Copy the following programs to the target's /usr/local/bin folder (create one if it doesn't exist already) from the local src folder: cp bt-adapter, bt-agent, bt-device, bt-network, and bt-obex
 
