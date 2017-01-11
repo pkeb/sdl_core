@@ -116,7 +116,7 @@ Note: Anything that begins with the character '$' indicates that the following i
    13. Make sure all sd card partitions are unmonted:
       1. `$ sudo umount /dev/sdb1`
       2. `$ sudo umount /dev/sdb`
-      3. Repeat as necessary based on $ dmesg 
+      3. Repeat as necessary based on `$ dmesg`
    14. `$ sudo dd`
    if=/home/duran/build/tmp/deploy/images/raspberrypi3/agl-demo-platform-raspberrypi3.rpi-sdimg of=/dev/sdX bs=4M
    15. `$ sync`
@@ -157,7 +157,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       13. When it prompts for user just type "root" and hit enter
       14. If it stops eventually and you don't see the user prompt, try pressing enter to get it to repopulate
       15. Once logged in, log messages may pop up in the middle of whatever you're doing, you can disable these by: 
-         1. P$ vi /etc/sysctl.conf`
+         1. `$ vi /etc/sysctl.conf`
          2. Uncomment the line beginning with `kernel.printk = `
          3. You may have to reboot to get it to activate
       16. If at some point the text in your terminal starts behaving strangely and messed up, a simple fix is to restart your VM.
