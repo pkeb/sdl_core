@@ -176,8 +176,8 @@ Note: Anything that begins with the character '$' indicates that the following i
       18. To enable video to the hdmi display (in pi AGL serial debug terminal): 
          1. `# cp /etc/xdg/weston/weston.ini /etc/xdg/weston/weston.ini.bak`
          2. `# vi /etc/xdg/weston/weston.ini`
-         3. //edit the file to be identical to below for regular desktop usage:
-         4. /etc/xdg/weston/weston.ini:
+         3. //edit the file to be identical to below:
+         4. /etc/xdg/weston/weston.ini for regular desktop usage:
             ```
             [core]
 
@@ -201,7 +201,33 @@ Note: Anything that begins with the character '$' indicates that the following i
 
             # Uncomment for 1080p on GeChic 1502i:
 
-            mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+            #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+            ```
+
+            etc/xdg/weston/weston.ini with ces 2017 demo usage:
+
+            ```
+            [core]
+
+            backend=drm-backend.so
+
+            shell=ivi-shell.so 
+
+            [ivi-shell]
+
+            ivi-module=ivi-controller.so,wl-shell-emulator.so 
+
+            ivi-input-module=ivi-input-controller.so
+
+            [output] 
+
+            name=HDMI-A-1
+
+            transform=270 
+
+            # Uncomment for 1080p on GeChic 1502i:
+
+            #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
             ```
 
 
