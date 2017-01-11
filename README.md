@@ -164,13 +164,13 @@ Note: Anything that begins with the character '$' indicates that the following i
       13. When it prompts for user just type "root" and hit enter
       14. If it stops eventually and you don't see the user prompt, try pressing enter to get it to repopulate
       15. Once logged in, log messages may pop up in the middle of whatever you're doing, you can disable these by: 
-         1. `$ vi /etc/sysctl.conf`
+         1. `# vi /etc/sysctl.conf`
          2. Uncomment the line beginning with `kernel.printk = `
          3. You may have to reboot to get it to activate
       16. If at some point the text in your terminal starts behaving strangely and messed up, a simple fix is to restart your VM.
       17. Mount new partition containing the sd card's free space 
-         1. `$ mkdir /home/rw`
-         2. `$ vi /etc/fstab`
+         1. `# mkdir /home/rw`
+         2. `# vi /etc/fstab`
          3. insert new line after the other lines. replace "mmcblk0p3" with whatever your partition is:
             1. `/dev/mmcblk0p3 /home/rw ext4 defaults 0 2`
          4. restart pi. /home/rw should have all that free space now
@@ -205,7 +205,7 @@ Note: Anything that begins with the character '$' indicates that the following i
             #mode=173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
             ```
 
-            etc/xdg/weston/weston.ini with ces 2017 demo usage:
+         5. /etc/xdg/weston/weston.ini with ces 2017 demo usage:
 
             ```
             [core]
