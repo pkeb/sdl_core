@@ -184,9 +184,6 @@ Note: Anything that begins with the character '$' indicates that the following i
 
 
 3. Create and install AGL cross sdk 
-   1. Compile and install the AGL crosssdk 
-      1. Note: text after a "$ " indicates the following text is a terminal command
-      2. Create rasp pi image and AGL cross sdk 
    2. $ mkdir ~/bin
    3. $ export PATH=~/bin:$PATH
    4. $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
