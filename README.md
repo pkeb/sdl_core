@@ -77,7 +77,7 @@ Note: Anything that begins with the character '$' indicates that the following i
          5. Click auto-mount and make permanent
          6. Click ok
          7. Click ok
-         8. make a folder ~/s ($ mkdir ~/s). "~" is Linux shorthand for /home/[username]
+         8. make a folder ~/s (`$ mkdir ~/s`). "~" is Linux shorthand for /home/[username]
          9. With root permissions (sudo) create a script "setup_share" at /usr/local/bin containing the following text:
             ```
             #!/bin/bash
