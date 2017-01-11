@@ -44,7 +44,7 @@ an instance of SDL Core on Automotive Grade Linux (AGL) running on a raspberrypi
 
 
 # Detailed steps:
-Note: Anything that begins with the character '$' indicates that the following is to be entered into a linux terminal
+Note: Anything that begins with the character '$' indicates that the following is to be entered into a linux terminal. The character '#' means to run as user root (except inside of scripts in which case it means a comment or the shebang! at the beginning of the script). When logged into a standard AGL image the default user is normally root, so '#' is nearly always the context commands are entered under.
 
 1. Setup development environment (Dev VM of Ubuntu 14.04 is assumed, modify as needed if running natively)
    1. Download and install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
@@ -274,20 +274,21 @@ Note: Anything that begins with the character '$' indicates that the following i
 6. Configure SDL on AGL 
    1. Enabling bluetooth 
       1. From either a terminal from the AGL desktop or over a serial debug connection:
-      2. `$ systemctl enable bluetooth
-      3. `$ systemctl restart bluetooth`
-      4. `$ rfkill unblock bluetooth`
+      2. `# systemctl enable bluetooth
+      3. `# systemctl restart bluetooth`
+      4. `# rfkill unblock bluetooth`
       5. To connect a device to the pi bluetooth:
-         1. `$ bluetoothctl`
-         2. `$ power on`
-         3. `$ agent on`
-         4. `$ scan on` 
+         1. `# bluetoothctl`
+         2. `# power on`
+         3. `# agent on`
+         4. `# scan on` 
             1. start looking for bluetooth devices on your phone. When the relevant mac appears (should say something about a phone next to it) do:
-            2. `$ pair [phone mac address]` 
+            2. `# pair [phone mac address]` 
             3. follow any instructions on phone and onscreen
-            4. `$ connect [phone mac address]`
+            4. `# connect [phone mac address]`
    2. Running Smart Device Link
       1. After copying the sdl_core/build/bin folder rename it to /home/rw/sdl_core
+         1. `# mv /home/rw/bin /home/rw/sdl_core`
       2. make a start script with `$ vi /home/rw/sdl_core/run_sdl.sh`:
       ```
       #!/bin/sh 
@@ -300,7 +301,7 @@ Note: Anything that begins with the character '$' indicates that the following i
 
       ./smartDeviceLinkCore > /home/rw/sdl_core/smartDeviceLinkCore.log 2>&1 # this routes all terminal text from sdl to  the smartDeviceLinkCore.log logfile
       ```
-      3. Make the script executable with `$ chmod +x /home/rw/sdl_core/run_sdl.sh`
+      3. Make the script executable with `# chmod +x /home/rw/sdl_core/run_sdl.sh`
       4. run the script with `# /home/rw/sdl_core/run_sdl.sh` or `# cd /home/rw/sdl_core; ./run_sdl.sh`
          1. To make the script run independently from your terminal (process won't close when you close the terminal: `# nohup /home/rw/sdl_core/run_sdl.sh &`
 
