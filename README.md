@@ -102,6 +102,8 @@ Note: Anything that begins with the character '$' indicates that the following i
       1. $ repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo 
    6. $ repo sync
    7. $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+      1. If at any time the build fails due to a missing or extra yocto configuration file try using the '-f' flag to force a reconfiguration:
+      2. $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
    8. If you add 'INHERIT += "rm_work"' To the AGL yocto build's local.conf after sourcing the aglsetup.sh script it will delete artifacts after a recipe is built meaning you can have a smaller Virtual Machine hard disk. Rerunning aglsetup.sh can overwrite this value so make sure you check it after resourcing the script.
    9. $ bitbake agl-demo-platform
       1. This command will take a LOOOONG time. On a decent laptop it takes 5 1/2 hours+
@@ -184,25 +186,23 @@ Note: Anything that begins with the character '$' indicates that the following i
 
 
 3. Create and install AGL cross sdk 
-   2. $ mkdir ~/bin
-   3. $ export PATH=~/bin:$PATH
-   4. $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-   5. $ chmod a+x ~/bin/repo repo init -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
-   6. $ repo sync
-   7. $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
-   8. If at any time the build fails due to a missing or extra yocto
-   configuration file try using the '-f' flag to force a reconfiguration:
-      1. $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
-   9. $ bitbake agl-demo-platform-crosssdk
+   1. If using a seperate terminal or in a new session since creating the AGL
+      image:
+      1. $ repo sync 
+      2. $ source meta-agl/scripts/aglsetup.sh -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+         1. If at any time the build fails due to a missing or extra yocto configuration file try using the '-f' flag to force a reconfiguration:
+         2. $ source meta-agl/scripts/aglsetup.sh -f -m raspberrypi3 agl-demo agl-netboot agl-appfw-smack
+   2. $ bitbake agl-demo-platform-crosssdk
       1. This command can take a LOOOONG time. On a decent laptop it can take 5 1/2 hours+
-   10. $ cd ~/build/tmp/deploy/sdk
-   11. $ sudo ./poky-agl-glibc-x86_64-agl-demo-platform-crosssdk-cortexa7hf-neon-vfpv4-toolchain-3.0.0+snapshot.sh
-   12. Create a helpful sourcable script to the sdk
-   13. $ gedit ~/qt-agl-cross:
+   3. Install sdk 
+      1. $ cd ~/build/tmp/deploy/sdk
+      2. $ sudo ./poky-agl-glibc-x86_64-agl-demo-platform-crosssdk-cortexa7hf-neon-vfpv4-toolchain-3.0.0+snapshot.sh
+   4. Create a helpful sourcable script to the sdk
+   5. $ gedit ~/qt-agl-cross:
       1. #!/bin/bash
       2. . /opt/poky-agl/3.0.0+snapshot/environment-setup-cortexa7hf-neon-vfpv4-agl-linux-gnueabi
-   14. save and close ~/qt-agl-cross 
-   15. To use the sdk from a terminal do '$ ~/qt-agl-cross' to setup your environment
+   6. save and close ~/qt-agl-cross 
+   7. To use the sdk from a terminal do '$ ~/qt-agl-cross' to setup your environment
 
 
 4. Clone and build SDL
