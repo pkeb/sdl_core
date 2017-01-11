@@ -301,7 +301,7 @@ Note: Anything that begins with the character '$' indicates that the following i
       ./smartDeviceLinkCore > /home/rw/sdl_core/smartDeviceLinkCore.log 2>&1 # this routes all terminal text from sdl to  the smartDeviceLinkCore.log logfile
       ```
       3. Make the script executable with `$ chmod +x /home/rw/sdl_core/run_sdl.sh`
-      4. run the script with `# /home/rw/sdl_core/run_sdl.sh` or `# cd /home/rw/sdl_core; ./run_sdl.sh`
+      4. run the script with `# /home/rw/sdl_core/bin/run_sdl.sh` or `# cd /home/rw/sdl_core/bin; ./run_sdl.sh`
          1. To make the script run independently from your terminal (process won't close when you close the terminal: `# nohup /home/rw/sdl_core/run_sdl.sh &`
 
 
